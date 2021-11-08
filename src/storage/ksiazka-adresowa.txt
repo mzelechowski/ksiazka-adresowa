@@ -1,8 +1,4 @@
-1;Maciej;Zelechowski;343322323;
-2;Pioterk ;Ulicki;dsjdflsajdlj;
-3;Marta;Grzechu;3232232;
-4;Wojtek;Typek;45555;
-5;Adam;Baniak;593434539430;6;jjjj;kkk;6555;
-6;jjj;kkk;758845;
-7;Marta;Basiak;69696969;
-8;Michal;Mazur;555444333;
+2;erwweew;weewww;5555;
+4;Bartek;Martek;777777;
+5;Marcin;Wojtek;55555555;
+6;Wotek;Szczesny;000000000;

@@ -1,5 +1,6 @@
 package pl.mzelechowski;
 
+import java.nio.file.StandardOpenOption;
 import java.util.Scanner;
 
 public class MenuProvider {
@@ -25,14 +26,16 @@ public class MenuProvider {
         switch (m){
             case 1:
                 System.out.println("wyswietlam liste kontaktow");
-                cfp.readRecord(cfp.readPhoneBookByPerson());
+                cfp.printByPerson(cfp.readPhoneBookByPerson());
                 break;
             case 2:
                 System.out.println("Dodaje nową  pozycję");
-                cfp.addNewRecord(new Person().createPerson());
+                cfp.readPhoneBookByPerson();
+                cfp.addNewRecord(new Person().createPerson(), StandardOpenOption.APPEND);
                 break;
             case 3:
                 System.out.println("Usuwam pozycje");
+                cfp.removeRecord();
                 break;
             case 4:
                 System.out.println("Wskaz sciezke i nazwe pliku");
@@ -42,7 +45,7 @@ public class MenuProvider {
                 break;
 
             default:
-                System.out.println("Nie ma takiej opcji. Podaj jeszcze raz co chesz zrobic");
+                System.out.printf("Nie ma takiej opcji. Podaj jeszcze raz co chesz zrobic: ");
                 break;
         }
     }
@@ -59,6 +62,6 @@ public class MenuProvider {
         System.out.println("     4. Zmien sciezke i nazwe pliku ksiazki adresowej");
         System.out.println("     0. Koniec");
 
-        System.out.println("     Dokonaj wyboru Neo:" );
+        System.out.printf("     Dokonaj wyboru Neo: " );
     }
 }

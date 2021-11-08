@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-
 public class CustomFileProvider {
     private static String path = "C:\\Mike\\ksiazka-adresowa\\src\\storage\\";
     private static String fileName = "ksiazka-adresowa.txt";
@@ -20,7 +19,7 @@ public class CustomFileProvider {
             bufferedReader = new BufferedReader(fileReader);
             String line = bufferedReader.readLine();
             while (line != null) {
-                System.out.println(line.replace(";"," "));
+                System.out.println(line.replace(";", " "));
                 line = bufferedReader.readLine();
             }
         } catch (IOException e) {
@@ -28,6 +27,7 @@ public class CustomFileProvider {
         }
         WaitForAnyKey();
     }
+
     public List<Person> readPhoneBookByPerson() {
         BufferedReader bufferedReader;
         List<Person> output = new ArrayList<>();
@@ -46,35 +46,73 @@ public class CustomFileProvider {
                 line = bufferedReader.readLine();
             }
         } catch (IOException e) {
-            e.printStackTrace(); //drukuje stack błędu
+            e.printStackTrace();
         }
         return output;
     }
 
-    public void readRecord(List<Person> persons){
-        for(Person p:persons){
-            System.out.println(p.getId()+" "+ p.getName()+" "+ p.getSurName()+" "+p.getPhoneNumber());
+    public void printByPerson(List<Person> persons) {
+        for (Person p : persons) {
+            System.out.println(p.getId() + " " + p.getName() + " " + p.getSurName() + " " + p.getPhoneNumber());
         }
         WaitForAnyKey();
     }
 
-    public void addNewRecord(Person record){
-        readPhoneBookByPerson();
-        Path path = Paths.get(this.path+this.fileName);
-        String sb=record.getId()+";"+record.getName()+";"+record.getSurName()+";"+record.getPhoneNumber()+";"+"\r\n";
+    public void removeRecord() {
+        printByPerson(readPhoneBookByPerson());
+        Scanner scanner = new Scanner(System.in);
+        System.out.printf("Podaj ID recordu do usunieca: ");
+        int id = 0;
+        do {
+            try {
+                if ((id = Integer.parseInt(scanner.nextLine())) > 0) {
+                    System.out.println(id);
+                } else {
+                    System.out.printf("Podaj ID recordu jako liczbę większą od zera: ");
+                }
+            } catch (NumberFormatException e) {
+                System.out.printf("Podaj ID recordu jako liczbę całkowitą: ");
+            }
+        } while (id <= 0);
+        List<Person> persons = readPhoneBookByPerson();
+        int index = -1;
+        int counter = 0;
+        for (Person p : persons) {
+            if (p.getId() == id) {
+                index = counter;
+            }
+            counter++;
+        }
+        if (index > -1) {
+            persons.remove(index);
+            Path path = Paths.get(this.path + this.fileName);
+            try {
+                Files.write(path, "".getBytes());
+            } catch (IOException e) {
+            }
+            for (Person p : persons) {
+                try {
+                    String sb = p.getId() + ";" + p.getName() + ";" + p.getSurName() + ";" + p.getPhoneNumber() + ";" + "\r\n";
+                    Files.write(path, sb.getBytes(), StandardOpenOption.APPEND);
+                } catch (IOException e) {
+                    System.out.println("Nie znaleziono pliku");
+                }
+            }
+        }
+    }
+
+    public void addNewRecord(Person record, OpenOption openOption) {
+        Path path = Paths.get(this.path + this.fileName);
+        String sb = record.getId() + ";" + record.getName() + ";" + record.getSurName() + ";" + record.getPhoneNumber() + ";" + "\r\n";
         try {
-            Files.write(path, sb.getBytes(), StandardOpenOption.APPEND);
-        }catch(IOException e){
+            Files.write(path, sb.getBytes(), openOption);
+        } catch (IOException e) {
             System.out.println("Nie znaleziono pliku");
         }
     }
 
-
-    void WaitForAnyKey()
-    {
+    void WaitForAnyKey() {
         System.out.println("\nPress any key to continue . . . ");
         new Scanner(System.in).nextLine();
     }
-
-
 }
