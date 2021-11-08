@@ -62,7 +62,7 @@ public class CustomFileProvider {
         printByPerson(readPhoneBookByPerson());
         Scanner scanner = new Scanner(System.in);
         System.out.printf("Podaj ID recordu do usunieca: ");
-        int id = 0;
+        int id = -1;
         do {
             try {
                 if ((id = Integer.parseInt(scanner.nextLine())) > 0) {
