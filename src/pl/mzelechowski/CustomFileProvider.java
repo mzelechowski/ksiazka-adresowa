@@ -61,17 +61,17 @@ public class CustomFileProvider {
     public void removeRecord() {
         printByPerson(readPhoneBookByPerson());
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Podaj ID recordu do usunieca: ");
+        System.out.print("Podaj ID recordu do usunieca lub 0 aby anulować: ");
         int id = -1;
         do {
             try {
-                if ((id = Integer.parseInt(scanner.nextLine())) > 0) {
-                    System.out.println(id);
+                if ((id = Integer.parseInt(scanner.nextLine())) >= 0) {
+                    if(id==0) return;
                 } else {
-                    System.out.print("Podaj ID recordu jako liczbę większą od zera: ");
+                    System.out.print("Podaj ID recordu jako liczbę całkowitą większą od 0 lub 0 aby anulować: ");
                 }
             } catch (NumberFormatException e) {
-                System.out.print("Podaj ID recordu jako liczbę całkowitą: ");
+                System.out.print("Podaj ID recordu jako liczbę całkowitą lub 0 aby anulować: ");
             }
         } while (id <= 0);
         List<Person> persons = readPhoneBookByPerson();
