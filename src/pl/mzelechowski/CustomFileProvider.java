@@ -12,21 +12,21 @@ public class CustomFileProvider {
     private static String path = "C:\\Mike\\ksiazka-adresowa\\src\\storage\\";
     private static String fileName = "ksiazka-adresowa.txt";
 
-    public void readFile() {
-        BufferedReader bufferedReader;
-        try {
-            FileReader fileReader = new FileReader(path + fileName);
-            bufferedReader = new BufferedReader(fileReader);
-            String line = bufferedReader.readLine();
-            while (line != null) {
-                System.out.println(line.replace(";", " "));
-                line = bufferedReader.readLine();
-            }
-        } catch (IOException e) {
-            System.out.println("Nie znaleziono pliku");
-        }
-        WaitForAnyKey();
-    }
+//    public void readFile() {
+//        BufferedReader bufferedReader;
+//        try {
+//            FileReader fileReader = new FileReader(path + fileName);
+//            bufferedReader = new BufferedReader(fileReader);
+//            String line = bufferedReader.readLine();
+//            while (line != null) {
+//                System.out.println(line.replace(";", " "));
+//                line = bufferedReader.readLine();
+//            }
+//        } catch (IOException e) {
+//            System.out.println("Nie znaleziono pliku");
+//        }
+//        WaitForAnyKey();
+//    }
 
     public List<Person> readPhoneBookByPerson() {
         BufferedReader bufferedReader;
@@ -61,17 +61,17 @@ public class CustomFileProvider {
     public void removeRecord() {
         printByPerson(readPhoneBookByPerson());
         Scanner scanner = new Scanner(System.in);
-        System.out.printf("Podaj ID recordu do usunieca: ");
+        System.out.print("Podaj ID recordu do usunieca: ");
         int id = -1;
         do {
             try {
                 if ((id = Integer.parseInt(scanner.nextLine())) > 0) {
                     System.out.println(id);
                 } else {
-                    System.out.printf("Podaj ID recordu jako liczbę większą od zera: ");
+                    System.out.print("Podaj ID recordu jako liczbę większą od zera: ");
                 }
             } catch (NumberFormatException e) {
-                System.out.printf("Podaj ID recordu jako liczbę całkowitą: ");
+                System.out.print("Podaj ID recordu jako liczbę całkowitą: ");
             }
         } while (id <= 0);
         List<Person> persons = readPhoneBookByPerson();
@@ -89,6 +89,7 @@ public class CustomFileProvider {
             try {
                 Files.write(path, "".getBytes());
             } catch (IOException e) {
+                System.out.print("Nie znaleziono pliku");
             }
             for (Person p : persons) {
                 try {
